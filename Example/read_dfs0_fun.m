@@ -4,10 +4,11 @@ function read_dfs0_fun()
 % script. The only difference between the two is the top line, defining the
 % function.
 
-%% For Mike software release 2017 or older, comment the following three lines:
-NET.addAssembly('DHI.Mike.Install');
-import DHI.Mike.Install.*;
-MikeImport.Setup(MikeMajorVersion.V17, [])
+% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
+dmi = NET.addAssembly('DHI.Mike.Install');
+if (~isempty(dmi)) 
+  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
+end
 
 NET.addAssembly('DHI.Generic.MikeZero.DFS');
 import DHI.Generic.MikeZero.DFS.*;
