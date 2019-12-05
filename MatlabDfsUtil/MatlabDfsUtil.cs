@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DHI.Generic.MikeZero;
 using DHI.Generic.MikeZero.DFS;
 
 namespace MatlabDfsUtil
@@ -35,6 +36,10 @@ namespace MatlabDfsUtil
       }
       dfs0File.Reset();
 
+      // Check if time axis is really a time axis, or if it is a non-time axis
+      eumUnit timeUnit = dfs0File.FileInfo.TimeAxis.TimeUnit;
+      bool isTimeUnit = EUMWrapper.eumUnitsEqv((int) eumUnit.eumUsec, (int) timeUnit);
+
       for (int i = 0; i < timestepCount; i++)
       {
         for (int j = 0; j < itemCount; j++)
@@ -44,7 +49,10 @@ namespace MatlabDfsUtil
           // First column is time, remaining colums are data
           if (j == 0)
           {
-            res[i, 0] = itemData.TimeInSeconds(dfs0File.FileInfo.TimeAxis);
+            if (isTimeUnit)
+              res[i, 0] = itemData.TimeInSeconds(dfs0File.FileInfo.TimeAxis);
+            else // not a time-unit, just return the value
+              res[i, 0] = itemData.Time;
           }
           res[i, j+1] = Convert.ToDouble(itemData.Data.GetValue(0));
         }
@@ -77,6 +85,8 @@ namespace MatlabDfsUtil
 
       float[] fdata = new float[1];
       double[] ddata = new double[1];
+
+      dfs0File.Reset();
 
       for (int i = 0; i < times.Length; i++)
       {
