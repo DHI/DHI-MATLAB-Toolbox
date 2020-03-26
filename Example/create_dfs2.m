@@ -1,7 +1,8 @@
 % Example on how to create a dfs2 file. The data put into the file are some
 % arbitrary sine/cosine function of time and space. The file matches the
 % output of MIKE 21 classic h-p-q files, which are the default HD output
-% from MIKE 21.
+% from MIKE 21. 
+% Note that the header is special for the MIKE 21 h-p-q files, look in the comments in the code below.
 
 % For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
 dmi = NET.addAssembly('DHI.Mike.Install');
@@ -28,6 +29,7 @@ factory = DfsFactory();
 builder = Dfs2Builder.Create('Matlab dfs2 file','Matlab DFS',0);
 
 % Set up the header
+% DataType = 1 is special for h-p-q files. If you are not sure, set to 0. Visit the User Guide for known DataType numbers
 builder.SetDataType(1);
 builder.SetGeographicalProjection(factory.CreateProjectionGeoOrigin('UTM-33', 12.4387, 55.2257, 327));
 builder.SetTemporalAxis(factory.CreateTemporalEqCalendarAxis(eumUnit.eumUsec,System.DateTime(1993,12,02,0,0,0),0,86400));
@@ -36,6 +38,7 @@ builder.DeleteValueFloat = single(-1e-30);
 
 % Add custom block 
 % M21_Misc : {orientation (should match projection), drying depth, -900=has projection, land value, 0, 0, 0}
+% M21_Misc Custom block is special for h-p-q files. Leave out for other dfs2 files
 builder.AddCustomBlock(dfsCreateCustomBlock(factory, 'M21_Misc', [327, 0.2, -900, 10, 0, 0, 0], 'System.Single'));
 
 % Add two items
