@@ -34,9 +34,9 @@ function mzWriteMesh(filename,Elmts,Nodes,coordsys,zUnitKey,force)
 %       25: 2D mixed triangular quadrilateral mesh
 %   The value is set based on the size of the Elmts input
 
-% Copyright, DHI, 2007-11-09. Author: JGR
-% Modified, 2011-10-12 JGR
-% Modified, 2013-02-22 JGR: support for z unit key in mesh files
+% Copyright, DHI, 2007-2020
+% Modified, 2013-02-22: Support for z unit key in mesh files
+% Modified, 2020-11-30: Updating boundary nodes with code value 0 to code value 1 (land code)
 
 % Check arguments
 if (nargin == 5)
@@ -120,6 +120,48 @@ if (nnz(I) > 0)
     Elmts(I4,[2 4]) = Elmts(I4,[4 2]);
   end
 end
+
+%% Check that all boundary nodes have a code ~=0:
+if (size(Elmts,2) == 3)
+    % Only triangles
+    Edges1 = [  Elmts(:,[1 2])
+                Elmts(:,[2 3])
+                Elmts(:,[3 1])];
+    Edges2 = [  Elmts(:,[1 3])
+                Elmts(:,[3 2])
+                Elmts(:,[2 1])];
+
+    BCE = setxor(Edges1,Edges2,'rows');
+    BC  = unique(BCE);
+    Nodes(BC(Nodes(BC,4)==0),4) = 1;
+
+else
+    % Mixed triangles and quads
+    quads  = (Elmts(:,4) > 0);
+    I3     = find(~quads);  % All clockwise triangles
+    I4     = find(quads);  % All clockwise quadrilaterals
+
+    Edges1 = [  Elmts(I3,[1 2])
+                Elmts(I3,[2 3])
+                Elmts(I3,[3 1])
+                Elmts(I4,[1 2])
+                Elmts(I4,[2 3])
+                Elmts(I4,[3 4])
+                Elmts(I4,[4 1])];
+            
+    Edges2 = [  Elmts(I3,[1 3])
+                Elmts(I3,[3 2])
+                Elmts(I3,[2 1])
+                Elmts(I4,[1 4])
+                Elmts(I4,[4 3])
+                Elmts(I4,[3 2])
+                Elmts(I4,[2 1])];
+
+    BCE = setxor(Edges1,Edges2,'rows');
+    BC  = unique(BCE);
+    Nodes(BC(Nodes(BC,4)==0),4) = 1;
+end
+
 
 %% Open and write file
 fid    = fopen(filename,'wt');
