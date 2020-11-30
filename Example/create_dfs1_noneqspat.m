@@ -2,14 +2,14 @@
 % (curvelinear). The data put into the file are some arbitrary create
 % functions of time and space.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
+% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
+% dmi = NET.addAssembly('DHI.Mike.Install');
+% if (~isempty(dmi)) 
+%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
+% end
 
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
-NET.addAssembly('DHI.Generic.MikeZero.EUM');
+NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 import DHI.Generic.MikeZero.DFS.dfs123.*;
 import DHI.Generic.MikeZero.*
@@ -23,7 +23,10 @@ builder = Dfs1Builder.Create('Matlab dfs1 file','Matlab DFS',0);
 builder.SetDataType(0);
 
 % Create a temporal definition
-builder.SetTemporalAxis(factory.CreateTemporalEqCalendarAxis(eumUnit.eumUsec,System.DateTime(2002,2,25,13,45,32),0,60));
+date = System.DateTime(2002,2,25,13,45,32);
+tempAxis = factory.CreateTemporalEqCalendarAxis(eumUnit.eumUsec, date, 0,60);
+%tempAxis = factory.CreateTemporalNonEqCalendarAxis(eumUnit.eumUsec, date);
+builder.SetTemporalAxis(tempAxis);
 
 % Create a non-equidistant (curvelinear) 1D axis
 x = [0;1;10;100;300;700;900;990;999;1000];
