@@ -3,18 +3,18 @@
 % Example showing how to create a dfs0 file using the DFS library. The data
 % put into the file are some arbitrary sin functions of time.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
+% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
+% dmi = NET.addAssembly('DHI.Mike.Install');
+% if (~isempty(dmi)) 
+%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
+% end
 
-NET.addAssembly('DHI.Generic.MikeZero.EUM');
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
+NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 H = NETaddDfsUtil();
 import DHI.Generic.MikeZero.DFS.*;
-import DHI.Generic.MikeZero.DFS.dfs123.*;
-import DHI.Generic.MikeZero.*
+import DHI.Generic.MikeZero.*;
+
 
 % Flag specifying whether dfs0 file stores floats or doubles.
 % MIKE Zero assumes floats, MIKE URBAN handles both.
@@ -39,12 +39,19 @@ factory = DfsFactory();
 builder = DfsBuilder.Create('Matlab dfs0 file','Matlab DFS',0);
 
 builder.SetDataType(0);
-builder.SetGeographicalProjection(factory.CreateProjectionGeoOrigin('UTM-33',12,54,2.6));
-builder.SetTemporalAxis(factory.CreateTemporalNonEqCalendarAxis(eumUnit.eumUsec,System.DateTime(2002,2,25,13,45,32)));
+proj = factory.CreateProjectionGeoOrigin('UTM-33',12,54,2.6);
+builder.SetGeographicalProjection(proj);
+date = System.DateTime(2002,2,25,13,45,32);
+unit = eumUnit.eumUsec;
+tAxis = factory.CreateTemporalNonEqCalendarAxis(unit, date);
+builder.SetTemporalAxis(tAxis);
 
 % Add three items
+eumWl = eumItem.eumIWaterLevel;
+eumMt = eumUnit.eumUmeter;
+quantity = DHI.Generic.MikeZero.eumQuantity(eumWl, eumMt);
 item1 = builder.CreateDynamicItemBuilder();
-item1.Set('WaterLevel item', DHI.Generic.MikeZero.eumQuantity(eumItem.eumIWaterLevel, eumUnit.eumUmeter), dfsdataType);
+item1.Set('WaterLevel item', quantity, dfsdataType);
 item1.SetValueType(DataValueType.Instantaneous);
 item1.SetAxis(factory.CreateAxisEqD0());
 builder.AddDynamicItem(item1.GetDynamicItemInfo());

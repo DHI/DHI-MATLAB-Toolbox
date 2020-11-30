@@ -34,14 +34,13 @@ function [vals, outInfos] = res11read(infile, extractPoints,chainagetol)
 % Copyright, DHI, 2010-08-20. Author: JGR
 %
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
+% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
+% dmi = NET.addAssembly('DHI.Mike.Install');
+% if (~isempty(dmi)) 
+%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
+% end
 
-
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 
 if (nargin <= 2)

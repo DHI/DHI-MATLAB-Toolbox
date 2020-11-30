@@ -34,37 +34,40 @@ function H = NETaddDfsUtil(dfsAssemblyName)
 
 % Only load once, store it for reuse, as persisten variable
 persistent DfsUtilAss;
-
 if (isempty(DfsUtilAss))
     
     % Not yet loaded, try to load it
-    
     if nargin == 0
-        dfsAssemblyName = 'DHI.Generic.MikeZero.DFS';
+        dfsAssemblyName = 'DHI.Generic.MikeZero.DFS.dll';
     end
-    
-    dfsAss = NET.addAssembly(dfsAssemblyName);
+    dfsAss = NETaddAssembly(dfsAssemblyName);
     dfsAssVer = dfsAss.AssemblyHandle.GetName().Version.Major;
-    
-    switch dfsAssVer
-        case 18 % Release 2020
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2020.dll');
-        case 17 % Release 2019
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2019.dll');
-        case 16 % Release 2017
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2017.dll');
-        case 15 % Release 2016
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2016.dll');
-        case 14 % Release 2014
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2014.dll');
-        case 13 % Release 2012
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2012.dll');
-        case 10 % Release 2011
-            DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2011.dll');
-        otherwise
-            msgs = ['Loading of MatlabDfsUtil failed, not available for Version ', num2str(dfsAssVer)];
-            disp(msgs);
-            DfsUtilAss = [];
+    if (dfsAssVer >= 19)
+        %%% from version 19 and forth, the Math Util is independent of the
+        %%% Mike Installation version, as it is not required to have a Mike
+        %%% product installed
+        DfsUtilAss = NETaddAssembly('MatlabDfsUtil.dll');
+    else
+        switch dfsAssVer
+            case 18 % Release 2020
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2020.dll');
+            case 17 % Release 2019
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2019.dll');
+            case 16 % Release 2017
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2017.dll');
+            case 15 % Release 2016
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2016.dll');
+            case 14 % Release 2014
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2014.dll');
+            case 13 % Release 2012
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2012.dll');
+            case 10 % Release 2011
+                DfsUtilAss = NETaddAssembly('MatlabDfsUtil.2011.dll');
+            otherwise
+                msgs = ['Loading of MatlabDfsUtil failed, not available for Version ', num2str(dfsAssVer)];
+                disp(msgs);
+                DfsUtilAss = [];
+        end
     end
 end
 

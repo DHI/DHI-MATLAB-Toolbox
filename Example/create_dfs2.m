@@ -4,14 +4,14 @@
 % from MIKE 21. 
 % Note that the header is special for the MIKE 21 h-p-q files, look in the comments in the code below.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
+% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
+% dmi = NET.addAssembly('DHI.Mike.Install');
+% if (~isempty(dmi)) 
+%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
+% end
 
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
-NET.addAssembly('DHI.Generic.MikeZero.EUM');
+NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 import DHI.Generic.MikeZero.DFS.dfs123.*;
 import DHI.Generic.MikeZero.*
