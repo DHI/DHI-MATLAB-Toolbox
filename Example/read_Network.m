@@ -42,12 +42,6 @@
 %    NetworkPlotProfile   : Plot profile and adds keyboard navigation to go
 %                           go forward/backward in time.
 
-% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
-% dmi = NET.addAssembly('DHI.Mike.Install');
-% if (~isempty(dmi)) 
-%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-% end
-
 rdAss = NETaddAssembly('DHI.Mike1D.ResultDataAccess.dll');
 import DHI.Mike1D.ResultDataAccess.*
 

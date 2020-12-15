@@ -4,12 +4,6 @@
 % script. The only difference between the two is the top line, defining the
 % function.
 
-% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
-% dmi = NET.addAssembly('DHI.Mike.Install');
-% if (~isempty(dmi)) 
-%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-% end
-
 NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 import DHI.Generic.MikeZero.DFS.dfs0.*;

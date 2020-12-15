@@ -1,12 +1,6 @@
 % Example of how to create a dfs1 file. The data put into the file are some
 % arbitrary sine/cosine function of time and space.
 
-% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
-% dmi = NET.addAssembly('DHI.Mike.Install');
-% if (~isempty(dmi)) 
-%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-% end
-
 NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
 NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;

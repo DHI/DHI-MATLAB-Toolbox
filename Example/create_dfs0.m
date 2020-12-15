@@ -3,12 +3,6 @@
 % Example showing how to create a dfs0 file using the DFS library. The data
 % put into the file are some arbitrary sin functions of time.
 
-% %For MIKE software release 2019 or 2020, the following is required to find the MIKE installation files
-% dmi = NET.addAssembly('DHI.Mike.Install');
-% if (~isempty(dmi)) 
-%   DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-% end
-
 NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
 NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 H = NETaddDfsUtil();
