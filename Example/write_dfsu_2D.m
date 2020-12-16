@@ -14,7 +14,7 @@ filename = 'test_written_2D.dfsu';
 % Copy to a new file, keeping the original intact.
 [status, message, messageId] = copyfile('data/data_oresund_2D.dfsu', filename, 'f');
 
-fileattrib(filename, '+w', 'o g'); %% change the attribute in case the source file is readonly
+fileattrib(filename, '+w'); %% change the attribute in case the source file is readonly
 % Load existing dfsu 2D file for editing 
 dfsu2 = DfsFileFactory.DfsuFileOpenEdit(filename);
 

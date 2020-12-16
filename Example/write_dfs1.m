@@ -12,7 +12,7 @@ filename = 'test_written.dfs1';
 % Copy to a new file, keeping the original intact.
 copyfile('data/data_moving_bump.dfs1', filename, 'f');
 
-fileattrib(filename, '+w', 'o g'); %% change the attribute in case the source file is readonly
+fileattrib(filename, '+w'); %% change the attribute in case the source file is readonly
 
 % Load existing dfs1 file for editing
 dfs1 = DfsFileFactory.Dfs1FileOpenEdit(filename);

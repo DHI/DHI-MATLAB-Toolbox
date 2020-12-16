@@ -10,7 +10,7 @@ filename = 'test_written.dfs2';
 % Copy to a new file, keeping the original intact.
 copyfile('data/data_corner.dfs2', filename, 'f');
 
-fileattrib(filename, '+w', 'o g'); %% change the attribute in case the source file is readonly
+fileattrib(filename, '+w'); %% change the attribute in case the source file is readonly
 % Load existing dfs2 file for editing
 dfs2 = DfsFileFactory.Dfs2FileOpenEdit(filename);
 
