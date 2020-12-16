@@ -1,13 +1,7 @@
 % Example of how to modify data in an existing dfs1 file.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
-
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
-NET.addAssembly('DHI.Generic.MikeZero.EUM');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
+NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
 import DHI.Generic.MikeZero.DFS.*;
 import DHI.Generic.MikeZero.DFS.dfs123.*;
 import DHI.Generic.MikeZero.*
@@ -18,7 +12,7 @@ filename = 'test_written.dfs1';
 % Copy to a new file, keeping the original intact.
 copyfile('data/data_moving_bump.dfs1', filename, 'f');
 
-fileattrib(filename, '+w', 'o g'); %% change the attribute in case the source file is readonly
+fileattrib(filename, '+w'); %% change the attribute in case the source file is readonly
 
 % Load existing dfs1 file for editing
 dfs1 = DfsFileFactory.Dfs1FileOpenEdit(filename);

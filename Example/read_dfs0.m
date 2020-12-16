@@ -3,13 +3,7 @@ function read_dfs0()
 % Dfs0Util for reading the dfs0 data efficiently. Without the use of the
 % Dfs0Util, performance is very bad.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
-
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 import DHI.Generic.MikeZero.DFS.dfs0.*;
 

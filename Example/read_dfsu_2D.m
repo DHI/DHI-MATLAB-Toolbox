@@ -20,13 +20,7 @@
 % If having a mixed mesh of triangles and quadrilaterals, only the mzPlot
 % method works.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
-
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 
 infile = 'data/data_oresund_2D.dfsu';

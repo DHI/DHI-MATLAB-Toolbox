@@ -22,13 +22,15 @@ if (isempty(mzVer))
     % Not yet determined
     
     if nargin == 0
-        dfsAssemblyName = 'DHI.Generic.MikeZero.DFS';
+        dfsAssemblyName = 'DHI.Generic.MikeZero.DFS.dll';
     end
     
-    dfsAss = NET.addAssembly(dfsAssemblyName);
+    dfsAss = NETaddAssembly(dfsAssemblyName);
     dfsAssVer = dfsAss.AssemblyHandle.GetName().Version.Major;
     
     switch dfsAssVer
+        case 19 % Release 2021
+            mzVer = 2021;
         case 18 % Release 2020
             mzVer = 2020;
         case 17 % Release 2019

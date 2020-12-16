@@ -2,14 +2,8 @@
 % some arbitrary sine/cosine functions of time and space. It uses the
 % Øresund mesh file for defining the geometry
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
-
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
-NET.addAssembly('DHI.Generic.MikeZero.EUM');
+NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 import DHI.Generic.MikeZero.DFS.dfsu.*;
 import DHI.Generic.MikeZero.*
@@ -34,14 +28,7 @@ start = System.DateTime(startDate(1),startDate(2),startDate(3),startDate(4),star
 builder.SetTimeInfo(start, 3600);
 
 % Create a spatial defition based on mesh input file
-% For release 2012 and earlier the SetNodes had X and Y float arguments.
-% For release 2014 and forward the SetNodes have X and Y double arguments.
-% The difference is: NET.convertArray(X)  vs  NET.convertArray(single(X))
-if (mzMikeVersion() > 2012)
-  builder.SetNodes(NET.convertArray(X),NET.convertArray(Y),NET.convertArray(single(Z)),NET.convertArray(int32(code)));
-else
-  builder.SetNodes(NET.convertArray(single(X)),NET.convertArray(single(Y)),NET.convertArray(single(Z)),NET.convertArray(int32(code)));
-end
+builder.SetNodes(NET.convertArray(X),NET.convertArray(Y),NET.convertArray(single(Z)),NET.convertArray(int32(code)));
 builder.SetElements(mzNetToElmtArray(Elmts));
 builder.SetProjection(factory.CreateProjection(proj))
 

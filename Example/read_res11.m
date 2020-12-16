@@ -5,14 +5,7 @@
 % For more flexible access to res11 results, check out the read_Network.m
 % example.
 
-% For MIKE software release 2019 or newer, the following is required to find the MIKE installation files
-dmi = NET.addAssembly('DHI.Mike.Install');
-if (~isempty(dmi)) 
-  DHI.Mike.Install.MikeImport.SetupLatest({DHI.Mike.Install.MikeProducts.MikeCore});
-end
-
-
-NET.addAssembly('DHI.Generic.MikeZero.DFS');
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
 import DHI.Generic.MikeZero.DFS.*;
 
 infile = 'data\data_vida96-3.res11';
