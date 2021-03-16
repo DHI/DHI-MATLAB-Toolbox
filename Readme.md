@@ -6,6 +6,20 @@ The current version of the toolbox supports reading of all dfs file types, dfs0+
 It also supports reading network results, such as results from MIKE 1D, MIKE 11 or MIKE URBAN/MOUSE/MIKE+ 
 (files with extensions .res11, .res1d, .prf, .xrf, .trf, .crf). 
 
+#### Content of this page
+- How to get help
+- Why a MATLAB Toolbox
+- Download and installation
+- Requirements
+- Building a new releases of DHI MATLAB Toolbox
+- Release notes
+
+## How to get help
+This pages includes an introduction on how to get started, and a few things to be aware of. 
+- Questions, ideas and suggestions for new features: [GitHub Discussions](https://github.com/DHI/DHI-MATLAB-Toolbox/discussions)
+- Bugs: [GitHub Issues](https://github.com/DHI/DHI-MATLAB-Toolbox/issues)
+
+
 ## Why a MATLAB TOOLBOX?
 
 MATLAB provides a compact high-level technical programming/scripting language, and together 
@@ -36,35 +50,6 @@ Two folders are required to be in the MATLAB serach path, the ```\mbin``` and th
 
 You should now be ready to use the DHI MATLAB Toolbox.
 
-## Release notes
-#### New in Version 19 (2021)
-1: The toolbox now contains all software as part of the toolbox. It is no longer required to install 
-any MIKE Software for the toolbox to work. Check section on Requirements for details.
-
-2: The use of ```DHI.MIKE.Install``` to locate a MIKE installation is no longer required, and should be removed. 
-
-3: To locate the required assemblies, the most convenient is to use the method: 
-
-```
-NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
-```
-
-Note that now the file extension ```'.dll'``` is also included,
-which was not the case in previous versions of the toolbox. 
-The following lines are the most common lines required in order to work with  dfs files
-
-```
-NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
-NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
-import DHI.Generic.MikeZero.DFS.*;
-import DHI.Generic.MikeZero.*.*;
-```
-
-4: The dfsTSO class has been removed from version 19 (2021) of the DHI MATLAB toolbox, 
-since the underlying TSObject is no longer a part of the MIKE software suite. 
-To continue using the dfsTSO class and its functionality, download instead 
-the version 18 (Release 2020) or earlier of the toolbox. 
-Check out the user guide in that release zip file for details of using and installing the toolbox.
 
 ## Requirements
 
@@ -109,3 +94,34 @@ To build a new version of the toolbox run first:
 4. Run the ```CreateZip.bat```
    - That puts all required files in the new DHIMatlabToolbox.zip. 
    - Give it a name matching the version and data of creation, i.e. something like DHIMatlabToolbox_v19.0.0-20201217.zip
+
+
+## Release notes
+#### New in Version 19 (2021)
+1: The toolbox now contains all software as part of the toolbox. It is no longer required to install 
+any MIKE Software for the toolbox to work. Check section on Requirements for details.
+
+2: The use of ```DHI.MIKE.Install``` to locate a MIKE installation is no longer required, and should be removed. 
+
+3: To locate the required assemblies, the most convenient is to use the method: 
+
+```
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
+```
+
+Note that now the file extension ```'.dll'``` is also included,
+which was not the case in previous versions of the toolbox. 
+The following lines are the most common lines required in order to work with  dfs files
+
+```
+NETaddAssembly('DHI.Generic.MikeZero.DFS.dll');
+NETaddAssembly('DHI.Generic.MikeZero.EUM.dll');
+import DHI.Generic.MikeZero.DFS.*;
+import DHI.Generic.MikeZero.*.*;
+```
+
+4: The dfsTSO class has been removed from version 19 (2021) of the DHI MATLAB toolbox, 
+since the underlying TSObject is no longer a part of the MIKE software suite. 
+To continue using the dfsTSO class and its functionality, download instead 
+the version 18 (Release 2020) or earlier of the toolbox. 
+Check out the user guide in that release zip file for details of using and installing the toolbox.
